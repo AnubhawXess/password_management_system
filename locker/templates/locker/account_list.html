@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block title %}<title>Your saved passwords list</title>{% endblock %}
+
+{% block content %}
+  <h1>Saved Account credentials for following sites</h1>
+  {% if object_list %}
+  <ul>
+    {% for account in object_list %}
+      <li>
+        <a href="{{ account.get_absolute_url }}">{{ account.name }} ({{ account.username }})</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no passwords saved by you.</p>
+  {% endif %}
+{% endblock %}

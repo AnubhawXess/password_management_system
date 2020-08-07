@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+<title>Account Details</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+{% endblock %}
+
+
+{% block content %}
+  <h1>Website: {{ account.name }}</h1>
+
+  <p><strong>Link: </strong> <a href="{{ account.link }}">{{ account.link }}</a></p>
+  <p><strong>Username: </strong> {{ account.username }}</p>
+  <p><strong>Password: </strong> <span class="pass">{{ account.password }}</span></p>
+
+  <p><a href="{% url 'account-update' account.pk %}">Update</a></p>
+  <p><a href="{% url 'account-delete' account.pk %}">Delete</a></p>
+
+<script>
+window.onload = function() {
+    const encrypted = document.querySelector(".pass");
+    var decrypted = CryptoJS.AES.decrypt(encrypted.textContent, "{{ request.user.password }}");
+    encrypted.textContent = decrypted.toString(CryptoJS.enc.Utf8);
+};
+</script>
+{% endblock %}
